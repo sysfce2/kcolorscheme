@@ -67,6 +67,16 @@ public:
      * @see KColorSchemeModel
      */
     QAbstractItemModel *model() const;
+
+    /**
+     * Returns the model index for the scheme with the given @p id. If no such
+     * scheme exists an invalid index is returned. If you pass an empty
+     * string the index that is equivalent to going back to following the system scheme is returned
+     * for versions 5.67 and newer.
+     * @see model
+     */
+    QModelIndex indexForSchemeId(const QString &id) const;
+
     /**
      * Returns the model index for the scheme with the given @p name. If no such
      * scheme exists an invalid index is returned. If you pass an empty
@@ -100,6 +110,12 @@ public:
      * @since 5.107
      */
     QString activeSchemeId() const;
+
+    /**
+     * Returns the name of the currently active scheme or an empty string if the default
+     * scheme is active.
+     */
+    QString activeSchemeName() const;
 
 public Q_SLOTS:
     /**

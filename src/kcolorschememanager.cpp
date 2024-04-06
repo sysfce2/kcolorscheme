@@ -156,6 +156,15 @@ void KColorSchemeManager::setAutosaveChanges(bool autosaveChanges)
     d->m_autosaveChanges = autosaveChanges;
 }
 
+QModelIndex KColorSchemeManager::indexForSchemeId(const QString &id) const
+{
+    // Empty string is mapped to "reset to the system scheme"
+    if (id.isEmpty()) {
+        return d->model->index(defaultSchemeRow);
+    }
+    return d->indexForSchemeId(id);
+}
+
 QModelIndex KColorSchemeManager::indexForScheme(const QString &name) const
 {
     // Empty string is mapped to "reset to the system scheme"
@@ -201,6 +210,11 @@ void KColorSchemeManager::saveSchemeToConfigFile(const QString &schemeName) cons
 QString KColorSchemeManager::activeSchemeId() const
 {
     return d->m_activatedScheme;
+}
+
+QString KColorSchemeManager::activeSchemeName() const
+{
+    return d->indexForSchemeId(d->m_activatedScheme).data(KColorSchemeModel::NameRole).toString();
 }
 
 #include "moc_kcolorschememanager.cpp"
